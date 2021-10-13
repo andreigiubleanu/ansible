@@ -4,44 +4,30 @@
   become: true
   tasks:
 
-  - name: update repository index
+
+  - name: install apache2 and php packages
     apt:
+      name: 
+        - apache2
+        - libapache2-mod-php
+      state: latest
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
-
-  - name: install apache2 package
-    apt:
-      name: apache2
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  - name: add php support for apache
-    apt:
-      name: libapache2-mod-php
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-
+  
   - name: remove vim-knox
     apt:
        name: vim-know
        state: absent
     when: ansible_distribution in ["Ubuntu","Debian"]
 
-  - name: update repository index
+
+  - name: install apache2 and php packages
     yum:
+      name: 
+        - httpd
+        - php
+      state: latest
       update_cache: yes
-    when: ansible_distribution in  ["Centos","Fedora"]
-
-  - name: install apache2 package
-    yum:
-      name: httpd
-      state: latest
-    when: ansible_distribution in  ["Centos","Fedora"]
-
-  - name: add php support for apache
-    yum:
-      name: php
-      state: latest
     when: ansible_distribution in  ["Centos","Fedora"]
 
   - name: remove vim-knox
